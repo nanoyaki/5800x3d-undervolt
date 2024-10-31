@@ -30,7 +30,7 @@ module. The package itself is provided under
 {
 	inputs = {
 		# ...
-    	vermeer-undervolt.url = "github:nanoyaki/5800x3d-undervolt/main";
+		vermeer-undervolt.url = "github:nanoyaki/5800x3d-undervolt/main";
 		# ...
 	};
 
