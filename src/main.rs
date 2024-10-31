@@ -29,8 +29,8 @@ fn main() {
 
 	println!("Trying to set {} cores to a {} milivolt offset", cores, offset);
 
-	for i in 0u8..8 {
-		set_core_offset(cores, offset);
+	for i in 0u8..cores {
+		set_core_offset(i, offset);
 		format_response(get_core_offset(i), i);
 	}
 }
