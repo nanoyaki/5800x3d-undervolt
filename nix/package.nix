@@ -16,5 +16,6 @@ rustPlatform.buildRustPackage {
     homepage = "https://github.com/nanoyaki/5800x3d-undervolt";
     license = lib.licenses.mit;
     platforms = lib.platforms.x86_64;
+    mainProgram = "vermeer-undervolt";
   };
 }
