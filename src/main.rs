@@ -64,10 +64,10 @@ fn mp1_smu_command(op: u8, args: SmuArgs) -> SmuArgs {
 }
 
 fn wait_for_smu_cmd() -> u32 {
-	let mut mp1_smu_cmd_result = read_mp1_smu_command();
+	let mut mp1_smu_cmd_result = read_mp1_smu_cmd();
 	while mp1_smu_cmd_result == 0x00 {
 		sleep(Duration::new(1, 0));
-		mp1_smu_cmd_result = read_mp1_smu_command();
+		mp1_smu_cmd_result = read_mp1_smu_cmd();
 	}
 
 	mp1_smu_cmd_result
@@ -90,7 +90,7 @@ fn read_smu_args() -> SmuArgs {
 	u8_vec_to_u32(&raw_bytes).try_into().expect("Something went horribly wrong whilst trying to read the smu_args file")
 }
 
-fn read_mp1_smu_command() -> u32 {
+fn read_mp1_smu_cmd() -> u32 {
 	let mp1_smu_cmd_path = Path::new(&SMU_DRIVER_PATH).join(MP1_SMU_CMD_FILE);
 	let raw_bytes = fs::read(mp1_smu_cmd_path.as_path()).expect("Couldn't read the mp1_smu_cmd file");
 	
