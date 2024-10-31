@@ -8,6 +8,10 @@
     inputs@{ flake-parts, ... }:
 
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./nix/nixosModule.nix
+      ];
+
       perSystem =
         { pkgs, ... }:
         {
@@ -21,6 +25,8 @@
               clippy
             ];
           };
+
+          packages.default = pkgs.callPackage ./nix/package.nix { };
         };
 
       systems = [ "x86_64-linux" ];
