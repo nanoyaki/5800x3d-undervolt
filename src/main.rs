@@ -27,10 +27,11 @@ fn main() {
 		panic!("Please do not use this as an overclocking utility. There's better programs for that out there");
 	}
 
-	println!("Setting {} cores to a {} milivolt offset", cores, offset);
+	println!("Trying to set {} cores to a {} milivolt offset", cores, offset);
 
 	for i in 0u8..8 {
-		format_response(set_core_offset(cores, offset), i);
+		set_core_offset(cores, offset);
+		format_response(get_core_offset(i), i);
 	}
 }
 
