@@ -9,6 +9,7 @@ rustPlatform.buildRustPackage {
 
   src = lib.cleanSource ./..;
 
+  useFetchCargoVendor = true;
   cargoHash = "sha256-+jOfMXgsLFnaa2BwiuJ4iCSrUfUrAryAFI57sXDxVHE=";
 
   meta = {
