@@ -1,6 +1,8 @@
-{ self, ... }:
-{
-  flake.nixosModules.vermeer-undervolt =
+{ self }:
+
+rec {
+  default = vermeer-undervolt;
+  vermeer-undervolt =
     {
       pkgs,
       lib,
@@ -17,6 +19,7 @@
         ;
 
       cfg = config.services.vermeer-undervolt;
+      package = self.packages.${pkgs.stdenv.hostPlatform.system}.default;
     in
 
     {
@@ -52,11 +55,7 @@
           wantedBy = [ "multi-user.target" ];
 
           serviceConfig = {
-            ExecStart =
-              let
-                exe = lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.default;
-              in
-              "${exe} ${toString cfg.cores} -${toString cfg.milivolts}";
+            ExecStart = "${package} ${toString cfg.cores} -${toString cfg.milivolts}";
             User = "root";
             Group = "wheel";
           };

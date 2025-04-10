@@ -1,34 +1,28 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    { self, nixpkgs }:
+    let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in
+    {
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          rustc
+          rust-analyzer
+          pkg-config
+          openssl
+          cargo
+          clippy
+        ];
+      };
 
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        ./nix/nixosModule.nix
-      ];
+      packages.x86_64-linux.default = pkgs.callPackage ./nix/package.nix { };
+      packages.x86_64-linux.vermeer-undervolt = pkgs.callPackage ./nix/package.nix { };
 
-      perSystem =
-        { pkgs, ... }:
-        {
-          devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              rustc
-              rust-analyzer
-              pkg-config
-              openssl
-              cargo
-              clippy
-            ];
-          };
-
-          packages.default = pkgs.callPackage ./nix/package.nix { };
-        };
-
-      systems = [ "x86_64-linux" ];
+      nixosModules = import ./nix/nixosModule.nix { inherit self; };
     };
 }
