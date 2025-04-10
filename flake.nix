@@ -20,8 +20,13 @@
         ];
       };
 
+      overlays.default = final: prev: {
+        vermeer-undervolt = self.packages.x86_64-linux.default;
+      };
+      overlays.vermeer-undervolt = self.overlays.default;
+
       packages.x86_64-linux.default = pkgs.callPackage ./nix/package.nix { };
-      packages.x86_64-linux.vermeer-undervolt = pkgs.callPackage ./nix/package.nix { };
+      packages.x86_64-linux.vermeer-undervolt = self.packages.x86_64-linux.default;
 
       nixosModules = import ./nix/nixosModule.nix { inherit self; };
     };
