@@ -9,8 +9,7 @@ rustPlatform.buildRustPackage {
 
   src = lib.cleanSource ./..;
 
-  useFetchCargoVendor = true;
-  cargoHash = "sha256-xu5eH92+n2nKEkg22ukBdIF57cSMBtevSnHyuzSH4lw=";
+  cargoLock.lockFile = ../Cargo.lock;
 
   meta = {
     description = "A command line utility to undervolt Ryzen Vermeer CPUs using Ryzen SMU";
