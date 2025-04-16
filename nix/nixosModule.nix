@@ -19,7 +19,7 @@ rec {
         ;
 
       cfg = config.services.vermeer-undervolt;
-      package = self.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      exec = lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.default;
     in
 
     {
@@ -55,7 +55,7 @@ rec {
           wantedBy = [ "multi-user.target" ];
 
           serviceConfig = {
-            ExecStart = "${package} ${toString cfg.cores} -${toString cfg.milivolts}";
+            ExecStart = "${exec} ${toString cfg.cores} -${toString cfg.milivolts}";
             User = "root";
             Group = "wheel";
           };
